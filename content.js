@@ -17,7 +17,7 @@ function traverse(tree) {
     } else {
         if (tree.nodeName === "#text") {
             if (tree.textContent.trim().length) {
-                console.log("tree", tree.nodeName, "|", tree.parentNode);
+                // console.log("tree", tree.nodeName, "|", tree.parentNode);
                 const button = tree.parentNode.innerHTML + "<span style='display: contents;' >Preview(5 min)</span>";
                 tree.parentNode.innerHTML = button;
             }
