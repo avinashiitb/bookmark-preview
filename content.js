@@ -7,8 +7,8 @@ const popupDiv = `<div class="popup-wrapper">
             <iframe src="" title="Iframe Example"></iframe>
         </div>
         <div class="footer">
+            <span class="read-time">8 Min</span>    
             <button class="bookmark">bookmark</button>
-            <span class="read-time">8 Min</span>
         </div>
     </div>    
 </div>`; 
