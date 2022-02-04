@@ -10,7 +10,7 @@ function popupDiv(url) {
                     
                 </div>
                 <div class="footer">
-                    <button class="bookmark">bookmark</button>
+                    <button class="bookmark" onclick="bookMark()">bookmark</button>
                     <span class="read-time">8 Min</span>
                 </div>
             </div>    
@@ -18,6 +18,7 @@ function popupDiv(url) {
 }
 
 window.addEventListener("message", function (event) {
+    console.log("Calling event");
     // only accept messages from the current tab
     if (event.source != window)
         return;
@@ -28,29 +29,30 @@ window.addEventListener("message", function (event) {
     }
 }, false);
 
-function injectScript(file_path, tag) {
-    var node = document.getElementsByTagName(tag)[0];
-    var script = document.createElement('script');
-    script.setAttribute('type', 'text/javascript');
-    script.setAttribute('src', file_path);
-    node.appendChild(script);
-}
-
-injectScript("https://raw.githubusercontent.com/avinashiitb/bookmark-preview/main/injectScript.js", 'body');
-
-
 function gotMessage(message, sender, sendresponse) {
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     var inlineScript = document.createTextNode(`
-        // function iframeFn (node, url) {
-        //     window.postMessage({ type: "FROM_PAGE", "Avinash" });
-        //     node.childNodes[3].childNodes[1].innerHTML = '<iframe src='+url+' title="Iframe Example"></iframe>';
-        //     console.log(url);
-        // }
-        // function sendMessage() {
-        //     window.postMessage({ type: "FROM_PAGE", "Avinash" });
-        // }
+        function iframeFn (node, url) {
+            node.childNodes[3].childNodes[1].innerHTML = '<iframe src='+url+' title="Iframe Example"></iframe>';
+            // console.log(node.parentNode);
+        }
+    `);
+    script.appendChild(inlineScript);
+    head.appendChild(script);
+
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    var inlineScript = document.createTextNode(`
+        $("a").click(function(e) {
+            // Do something
+            console.log(e.target.className);
+            var data = { type: "FROM_PAGE", text: "Hello from the webpage!" };
+            window.postMessage(data, "*");
+            if(e.target.className==="popup") {
+                return false;
+            }
+        });
     `);
     script.appendChild(inlineScript);
     head.appendChild(script);
