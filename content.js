@@ -36,7 +36,7 @@ function injectScript(file_path, tag) {
     node.appendChild(script);
 }
 
-injectScript("https://gist.github.com/danharper/8364399.js", 'body');
+injectScript("https://raw.githubusercontent.com/avinashiitb/bookmark-preview/main/injectScript.js", 'body');
 
 
 function gotMessage(message, sender, sendresponse) {
