@@ -3,16 +3,26 @@
     "name": "Preview & Bookmark",
     "author": "Aviansh",
     "version": "0.001",
-    "content_scripts" : [
-		{
-			"matches" : ["<all_urls>"],
-            "js" : ["content.js"],
-            "css": ["style.css"]
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "style.css"
+            ]
         }
     ],
-    "background" : {
-        "scripts" : ["background.js"]
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
     },
-    "browser_action" : {
-    }
+    "web_accessible_resources": [
+        "inject-script.js"
+    ],
+    "browser_action": {},
+    "permissions": [
+        "storage"    ]
 }
