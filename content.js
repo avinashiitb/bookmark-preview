@@ -18,7 +18,14 @@ function popupDiv(url) {
 }
 
 window.addEventListener("message", function (event) {
-    console.log("Calling event");
+    console.log("Calling event", event);
+    chrome.storage.sync.set({"data": event.data}, function() {
+        console.log('Value is set to ' + event.data);
+      });
+      
+      chrome.storage.sync.get(["data"], function(result) {
+        console.log('Value currently is ' + JSON.stringify(result));
+      });
     // only accept messages from the current tab
     if (event.source != window)
         return;
@@ -46,8 +53,8 @@ function gotMessage(message, sender, sendresponse) {
     var inlineScript = document.createTextNode(`
         $("a").click(function(e) {
             // Do something
-            console.log(e.target.className);
-            var data = { type: "FROM_PAGE", text: "Hello from the webpage!" };
+            console.log(e.currentTarget.href);
+            var data = { type: "url", text: e.currentTarget.href };
             window.postMessage(data, "*");
             if(e.target.className==="popup") {
                 return false;
