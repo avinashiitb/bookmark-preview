@@ -1,5 +1,4 @@
-chrome.runtime.onMessage.addListener(gotMessage);
-
+window.flag = false;
 
 function popupDiv(url) {
     return `
@@ -87,4 +86,12 @@ function traverse(tree, elt) {
         }
     }
 }
-gotMessage();
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if( request.message === "start" && !window.flag) {
+            window.flag = true;
+            gotMessage();
+        }
+    }
+);
