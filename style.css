@@ -45,10 +45,14 @@
     align-items: center;
     pointer-events: none;
     border-top: 1px solid #0072b3;
-    font-size: 16px;
-    color: #0072b3;
     justify-content: space-between;
     padding: 2% 8%;
+}
+
+.popup-wrapper .popup .footer .read-time,
+.popup-wrapper .popup .footer .bookmark {
+    font-size: 16px;
+    color: #0072b3;
 }
 
 .popup-wrapper .popup .header iframe {

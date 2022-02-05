@@ -8,3 +8,9 @@ function popup() {
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("do-count").addEventListener("click", popup);
 });
+
+chrome.storage.sync.get(["data"], function(result) {
+    console.log("====================");
+    console.log(result);
+    console.log("====================");
+});
