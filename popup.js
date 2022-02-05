@@ -1,12 +1,14 @@
 function popup() {
     chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
-    var activeTab = tabs[0];
-    chrome.tabs.sendMessage(activeTab.id, {"message": "start"});
-   });
+        var activeTab = tabs[0];
+        chrome.tabs.sendMessage(activeTab.id, {"message": "start"});
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("do-count").addEventListener("click", popup);
+//   document.getElementById("do-count").addEventListener("click", popup);
+    if(document.querySelector(".trigger-button"))
+    document.querySelector(".trigger-button").addEventListener("click", popup);
 });
 
 chrome.storage.sync.get(["data"], function(result) {

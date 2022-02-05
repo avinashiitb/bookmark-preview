@@ -46,7 +46,7 @@
     pointer-events: none;
     border-top: 1px solid #0072b3;
     justify-content: space-between;
-    padding: 2% 8%;
+    padding: 12px 8%;
 }
 
 .popup-wrapper .popup .footer .read-time,
