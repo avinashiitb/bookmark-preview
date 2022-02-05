@@ -3,7 +3,7 @@
     display: inline;
 }
 
-.popup-wrapper svg{ 
+.popup-wrapper > svg{ 
     position: absolute;
     top: -4px;
 }
@@ -19,7 +19,7 @@
     z-index: 1000;
     padding: 0;
     opacity: 1;
-    border: 1px solid #dadce0;
+    border: 1px solid #0072b3;
     border-radius: 6px;
     box-shadow: 1px 2px 4px 0 555;
     transition: opacity .6s;
@@ -34,7 +34,7 @@
     border-width: 5px;
     border-width: 10px;
     border-style: solid;
-    border-color: transparent rgb(218, 220, 224) transparent transparent;
+    border-color: transparent #0072b3 transparent transparent;
 }
 
 .popup-wrapper .popup .footer {
@@ -42,12 +42,13 @@
     bottom: 0;
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
     align-items: center;
     pointer-events: none;
-    border-top: 1px solid rgb(218, 220, 224);
-    padding: 5px 0px;
+    border-top: 1px solid #0072b3;
     font-size: 16px;
+    color: #0072b3;
+    justify-content: space-between;
+    padding: 2% 8%;
 }
 
 .popup-wrapper .popup .header iframe {
@@ -56,10 +57,9 @@
     border: none;
 }
 
-.popup-wrapper .popup .footer .bookmark {
+/* .popup-wrapper .popup .footer .bookmark {
     background-color: #ddd;
     border: none;
-    color: black;
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
@@ -71,14 +71,9 @@
     cursor: pointer;
   }
   
-  .popup-wrapper .popup .footer .read-time {
-      text-decoration: underline;
-  }
-
-
 .popup-wrapper .popup .footer .bookmark:hover {
     background-color: #f1f1f1;
-}
+} */
 
 .popup-wrapper:hover .popup {
     display: block;
