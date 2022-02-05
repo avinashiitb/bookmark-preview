@@ -19,9 +19,6 @@
             "background.js"
         ]
     },
-    "web_accessible_resources": [
-        "inject-script.js"
-    ],
     "browser_action": {},
     "permissions": [
         "storage",
