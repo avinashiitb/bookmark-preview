@@ -3,7 +3,7 @@
     display: inline;
 }
 
-.popup-wrapper svg{ 
+.popup-wrapper > svg{ 
     position: absolute;
     top: -4px;
 }
@@ -11,29 +11,30 @@
 .popup-wrapper .popup {
     position: absolute;
     height: 500px;
-    width: 500px;
+    width: 360px;
     background: white;
-    top: 50%;
+    top: -10px;
     display: none;
-    left: 15px;
-    z-index: 100;
+    left: 20px;
+    z-index: 1000;
     padding: 0;
     opacity: 1;
-    border: 1px solid #dadce0;
+    border: 1px solid #0072b3;
     border-radius: 6px;
-    box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 8%);
+    box-shadow: 1px 2px 4px 0 555;
     transition: opacity .6s;
 }
 
 .popup-wrapper .popup::before {
     content: "";
     position: absolute;
-    top: 50%;
+    top: 6px;
     right: 100%;
     margin-top: -5px;
     border-width: 5px;
+    border-width: 10px;
     border-style: solid;
-    border-color: transparent #555 transparent transparent;
+    border-color: transparent #0072b3 transparent transparent;
 }
 
 .popup-wrapper .popup .footer {
@@ -41,11 +42,17 @@
     bottom: 0;
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
     align-items: center;
     pointer-events: none;
-    border-top: 1px solid rgb(218, 220, 224);
-    padding: 5px 0px;
+    border-top: 1px solid #0072b3;
+    justify-content: space-between;
+    padding: 12px 8%;
+}
+
+.popup-wrapper .popup .footer .read-time,
+.popup-wrapper .popup .footer .bookmark {
+    font-size: 16px;
+    color: #0072b3;
 }
 
 .popup-wrapper .popup .header iframe {
@@ -54,10 +61,9 @@
     border: none;
 }
 
-.popup-wrapper .popup .footer .bookmark {
+/* .popup-wrapper .popup .footer .bookmark {
     background-color: #ddd;
     border: none;
-    color: black;
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
@@ -69,14 +75,9 @@
     cursor: pointer;
   }
   
-  .popup-wrapper .popup .footer .read-time {
-      text-decoration: underline;
-  }
-
-
 .popup-wrapper .popup .footer .bookmark:hover {
     background-color: #f1f1f1;
-}
+} */
 
 .popup-wrapper:hover .popup {
     display: block;

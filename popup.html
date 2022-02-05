@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview & Bookmark</title>
+    <link rel="stylesheet" type="text/css" href="https://semantic-ui.com/dist/semantic.min.css">
+    <style>
+        .top-footer,.top-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-header {
+            border-top: 1px solid #0072b3;
+            padding: 10px 0;
+        }
+        .top-footer .bookmarks {
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .top-footer .bookmarks .node {
+            display: flex;
+            justify-content: space-between;
+        }
+        .bookmarks .checkbox {
+            margin: 6px 0;
+        }
+        .top-footer .search {
+            margin-top: 6px;
+            width: 96%;
+        }
+        .top-footer .search > .input {
+            width: 100%;
+        }
+        .top-footer .title {
+            padding: 14px;
+            border-bottom: 1px solid #0072b3;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-footer">
+        <h4 class="ui center aligned icon header title">
+            Preview and Bookmark
+        </h4>
+        <div class="ui category search">
+            <div class="ui icon input">
+              <input class="prompt" type="text" placeholder="Search Bookmarks...">
+              <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
+        </div>
+        <div class="bookmarks">
+            <div class="node">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="example">
+                    <label>Make my profile visible</label>
+                  </div>
+                <button class="ui circular bomb icon button">
+                    <i class="bomb icon"></i>
+                </button>
+            </div>
+            <div class="node">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="example">
+                    <label>Make my profile visible</label>
+                  </div>
+                <button class="ui circular bomb icon button">
+                    <i class="bomb icon"></i>
+                </button>
+            </div>
+            <div class="node">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="example">
+                    <label>Make my profile visible</label>
+                  </div>
+                <button class="ui circular bomb icon button">
+                    <i class="bomb icon"></i>
+                </button>
+            </div>
+            <div class="node">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="example">
+                    <label>Make my profile visible</label>
+                  </div>
+                <button class="ui circular bomb icon button">
+                    <i class="bomb icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="top-header">
+        <div class="ui left labeled button" tabindex="0">
+            <a class="ui basic right pointing label">
+              2,048
+            </a>
+            <div class="ui button trigger-button">
+              <i class="power off icon"></i> Switch On
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
