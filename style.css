@@ -11,29 +11,30 @@
 .popup-wrapper .popup {
     position: absolute;
     height: 500px;
-    width: 500px;
+    width: 360px;
     background: white;
-    top: 50%;
+    top: -10px;
     display: none;
-    left: 15px;
-    z-index: 100;
+    left: 20px;
+    z-index: 1000;
     padding: 0;
     opacity: 1;
     border: 1px solid #dadce0;
     border-radius: 6px;
-    box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 8%);
+    box-shadow: 1px 2px 4px 0 555;
     transition: opacity .6s;
 }
 
 .popup-wrapper .popup::before {
     content: "";
     position: absolute;
-    top: 50%;
+    top: 6px;
     right: 100%;
     margin-top: -5px;
     border-width: 5px;
+    border-width: 10px;
     border-style: solid;
-    border-color: transparent #555 transparent transparent;
+    border-color: transparent rgb(218, 220, 224) transparent transparent;
 }
 
 .popup-wrapper .popup .footer {
@@ -46,6 +47,7 @@
     pointer-events: none;
     border-top: 1px solid rgb(218, 220, 224);
     padding: 5px 0px;
+    font-size: 16px;
 }
 
 .popup-wrapper .popup .header iframe {
