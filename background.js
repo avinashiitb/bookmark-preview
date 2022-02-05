@@ -7,3 +7,6 @@ function IconClicked(tab)
 	}
 	chrome.tabs.sendMessage(tab.id,msg);
 }
+chrome.storage.sync.get(["data"], function (result) {
+	console.log("Result", result.data);
+});

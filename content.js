@@ -14,23 +14,62 @@ function popupDiv(url, min=8) {
         </div>`;
 }
 
-window.addEventListener("message", function (event) {
-    console.log("Calling event", event);
-    chrome.storage.sync.set({"data": event.data}, function() {
-        console.log('Value is set to ' + event.data);
-      });
-      
-      chrome.storage.sync.get(["data"], function(result) {
-        console.log('Value currently is ' + JSON.stringify(result));
-      });
-    // only accept messages from the current tab
-    if (event.source != window)
-        return;
-
-    if (event.data.type && (event.data.type == "FROM_PAGE") && typeof chrome.app.isInstalled !== 'undefined') {
-        // chrome.runtime.sendMessage({ essential: event.data.essential });
-        console.log("Calling event");
+async function searchTree(tree, childData, origin) {
+    if (tree.value && tree.value === origin) {
+        tree.childNodes.push(childData);
+        return true;
     }
+    else if (tree.childNodes && tree.childNodes.length) {
+        tree.childNodes.forEach((child) => {
+            searchTree(child, childData, origin);
+        });
+    } else {
+        const parentData = {
+            type: "url",
+            value: origin,
+            isRead: true,
+            childNodes: [childData]
+        };
+        storeData.childNodes.push(parentData);
+        return false;
+    }
+}
+var storeData;
+// chrome.storage.sync.clear();
+window.addEventListener("message", function (event) {
+    const childData = {
+        ...event.data,
+        isRead: false,
+        childNodes: []
+    }
+    chrome.storage.sync.get(["data"], function (result) {
+        console.log("Result", result.data);
+        storeData = result.data;
+        // First time data entry
+        if(!result.data){
+            const parentData = {
+                type: "url",
+                value: event.source.location.href,
+                childNodes: [childData]
+            }
+            var rootData = {
+                type: "parent",
+                childNodes: [parentData]
+            };
+            chrome.storage.sync.set({ "data": rootData }, function () {
+                console.log('Root Value is set to ', rootData);
+            });
+        } 
+        else if (storeData.childNodes && storeData.childNodes.length) {
+            console.log(event, event.source.location.href);
+            searchTree(storeData, childData, event.source.location.href).then((res) => {
+                console.log("Storedata", storeData);
+                chrome.storage.sync.set({ "data": storeData }, function () {
+                    console.log('Value is set to ', storeData);
+                });
+            });
+        }
+    });
 }, false);
 
 function gotMessage(message, sender, sendresponse) {
@@ -49,8 +88,8 @@ function gotMessage(message, sender, sendresponse) {
     var inlineScript = document.createTextNode(`
         $("a").click(function(e) {
             // Do something
-            console.log(e.currentTarget.href);
-            var data = { type: "url", text: e.currentTarget.href };
+            // console.log(e.currentTarget.href);
+            var data = { type: "url", value: e.currentTarget.href };
             window.postMessage(data, "*");
             if(e.target.className==="popup") {
                 return false;
