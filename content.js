@@ -35,7 +35,7 @@ async function searchTree(tree, childData, origin) {
     }
 }
 var storeData;
-// chrome.storage.sync.clear();
+chrome.storage.sync.clear();
 window.addEventListener("message", function (event) {
     const childData = {
         ...event.data,
