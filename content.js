@@ -131,3 +131,18 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
+
+function getSelectionText(){
+    var selectedText = ""
+    if (window.getSelection){ // all modern browsers and IE9+
+        selectedText = window.getSelection().toString()
+    }
+    return selectedText
+}
+
+window.addEventListener('mouseup', function(){
+    var thetext = getSelectionText()
+    if (thetext.length > 0){ // check there's some text selected
+        console.log(thetext) // logs whatever textual content the user has selected on the page
+    }
+}, false)
