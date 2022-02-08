@@ -107,7 +107,6 @@ function gotMessage(message, sender, sendresponse) {
             // Do something
             // console.log(e.currentTarget.href);
             console.log(e);
-            debugger;
             var data = { type: "url", value: e.currentTarget.href };
             if(e.target.className==="popup") {
                 window.postMessage(data, "*");
