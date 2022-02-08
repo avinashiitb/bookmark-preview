@@ -97,7 +97,7 @@ window.addEventListener("message", function (event) {
     $.ajax({
         url: event.data.value,
         async: true,
-        success: function(data) {
+        success: function (data) {
             // console.log(data);
             var bookPageTitle = data.match(/<title>(.*?)<\/title>/)[1];
             const childData = {
@@ -111,7 +111,7 @@ window.addEventListener("message", function (event) {
                 console.log("Result", result.data);
                 storeData = result.data;
                 // First time data entry
-                if(!result.data){
+                if (!result.data) {
                     const parentData = {
                         type: "url",
                         value: window.location.href,
@@ -126,10 +126,10 @@ window.addEventListener("message", function (event) {
                     chrome.storage.sync.set({ "data": rootData }, function () {
                         console.log('Root Value is set to ', rootData);
                     });
-                } 
+                }
                 else if (storeData.childNodes && storeData.childNodes.length) {
                     const searcResult = search(storeData, childData, window.location.href);
-                    if(!searcResult) {
+                    if (!searcResult) {
                         const parentData = {
                             type: "url",
                             value: window.location.href,
@@ -145,7 +145,7 @@ window.addEventListener("message", function (event) {
                 }
             });
 
-        }   
+        }
     });
 }, false);
 
@@ -222,6 +222,47 @@ function getSelectionText() {
 window.addEventListener('mouseup', function () {
     var thetext = getSelectionText()
     if (thetext.length > 0) { // check there's some text selected
-        console.log(thetext, window.location) // logs whatever textual content the user has selected on the page
+        // console.log(thetext, window.location) // logs whatever textual content the user has selected on the page
+        const childData = {
+            type: "text",
+            value: thetext,
+        }
+        chrome.storage.sync.get(["data"], function (result) {
+            console.log("Result", result.data);
+            storeData = result.data;
+            // First time data entry
+            if (!result.data) {
+                const parentData = {
+                    type: "url",
+                    value: window.location.href,
+                    parentTitle: document.title,
+                    parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
+                    childNodes: [childData]
+                }
+                var rootData = {
+                    type: "parent",
+                    childNodes: [parentData]
+                };
+                chrome.storage.sync.set({ "data": rootData }, function () {
+                    console.log('Root Value is set to ', rootData);
+                });
+            }
+            else if (storeData.childNodes && storeData.childNodes.length) {
+                const searcResult = search(storeData, childData, window.location.href);
+                if (!searcResult) {
+                    const parentData = {
+                        type: "url",
+                        value: window.location.href,
+                        parentTitle: document.title,
+                        childNodes: [childData]
+                    }
+                    storeData.childNodes.push(parentData);
+                }
+                console.log("searcResult", searcResult, window.location.href);
+                chrome.storage.sync.set({ "data": storeData }, function () {
+                    console.log('Value is set to ', storeData);
+                });
+            }
+        });
     }
 }, false)
