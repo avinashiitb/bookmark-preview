@@ -9,6 +9,7 @@
     <style>
         html {
             height: auto;
+            width: 436px;
         }
         .top-footer,.top-header {
             display: flex;
@@ -116,10 +117,14 @@
             margin-right: 8px;
         }
 
-
-        .container {
-  margin: 0 auto;
-}
+        .notes {
+            font-size: 10px;
+            font-style: italic;
+            color: darkcyan;
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
 
 .round {
   position: relative;
@@ -208,6 +213,7 @@
     width: 20%;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .parent-div {
@@ -277,10 +283,10 @@
     </div>
     <div class="top-header">
         <div class="ui left labeled button" tabindex="0">
-            <a class="ui basic right pointing label blue bookmark_count">
+            <a class="ui basic right pointing label bookmark_count">
               0
             </a>
-            <div class="ui button trigger-button blue">
+            <div class="ui button trigger-button">
               <i class="power off icon"></i> Switch On
             </div>
         </div>

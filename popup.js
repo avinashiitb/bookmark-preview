@@ -1,6 +1,8 @@
 function popup() {
     chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
         var activeTab = tabs[0];
+        $('.top-header .button > a').addClass('blue');
+        $('.top-header .button > div').addClass('blue');
         chrome.tabs.sendMessage(activeTab.id, {"message": "start"});
     });
 }
@@ -38,13 +40,10 @@ function synthesizeData(node) {
     return result[0];
 }
 
-
-
 chrome.storage.sync.get(["data"], function(result) {
     console.log("====================");
     console.log(result);
     console.log("====================");
-
    
     if(result.data) {
     
@@ -52,22 +51,22 @@ chrome.storage.sync.get(["data"], function(result) {
         // console.log(categoryContent);
         // const booklength = categoryContent.length;
         
-        let parentNodeHTML = result.data.childNodes.map(node => {
+        let parentNodeHTML = result.data.childNodes.map((node,ind) => {
             let childNodesHTML = '';
+            let notesHTML = '';
             if(node.childNodes && node.childNodes.length) {
-                debugger;
-                childNodesHTML = node.childNodes.map(childNodes => childNodes.type =='url' ? `
+                childNodesHTML = node.childNodes.map((childNodes,index) => childNodes.type =='url' ? `
                 <div class="item">
                     <div class="ui child">
                         <div class="parent-div">
                             <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
-                            <a href=${childNodes.value} title=${childNodes.title.split(" ").join('-')}>${childNodes.title}</a>
+                            <a href=${childNodes.value} title=${childNodes.title.split(" ").join(`-${ind}-${index}-`)}>${childNodes.title}</a>
                         </div>
                         <div class="parent-button">
                             <div class="container">
                                 <div class="round">
-                                    <input type="checkbox" id=${childNodes.title.split(" ").join('-')} />
-                                    <label for=${childNodes.title.split(" ").join('-')}></label>
+                                    <input type="checkbox" id=${childNodes.title.split(" ").join(`-${ind}-${index}-`)} ${childNodes.isRead ? 'checked' : ''}/>
+                                    <label for=${childNodes.title.split(" ").join(`-${ind}-${index}-`)}></label>
                                 </div>
                             </div>
                             <div class="close-container">
@@ -76,19 +75,27 @@ chrome.storage.sync.get(["data"], function(result) {
                         </div>
                     </div>
                 </div>` : '').join(" ");
+
+                notesHTML = node.childNodes.map(childNodes => childNodes.type =='text' ? `
+                <span>${childNodes.value}</span>` : '').join(" ");
+
+                notesHTML = !!notesHTML ? `<div class="notes">${notesHTML}</div>` : notesHTML;
             }
             return`
-            <div class="item">
+            <div class="item" id=${ind}>
                 <div class="ui master">
                     <div class="parent-div">
-                        <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join('-')} />
-                        <a href=${node.value} title=${node.parentTitle.split(" ").join('-')}>${node.parentTitle}</a>
+                        <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join(`-${ind}-`)} />
+                        <div class="des">
+                            <a href=${node.value} title=${node.parentTitle.split(" ").join(`-${ind}-`)}>${node.parentTitle}</a>
+                            ${notesHTML}
+                        </div>
                     </div>
                     <div class="parent-button">
                         <div class="container">
                             <div class="round">
-                                <input type="checkbox" id=${node.parentTitle.split(" ").join('-')} />
-                                <label for=${node.parentTitle.split(" ").join('-')}></label>
+                                <input type="checkbox" id=${node.parentTitle.split(" ").join(`-${ind}-`)}  checked />
+                                <label for=${node.parentTitle.split(" ").join(`-${ind}-`)}></label>
                             </div>
                         </div>
                         <div class="close-container">

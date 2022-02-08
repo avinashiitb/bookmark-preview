@@ -47,6 +47,7 @@
     border-top: 1px solid #0072b3;
     justify-content: space-between;
     padding: 12px 8%;
+    z-index: 2;
 }
 
 .popup-wrapper .popup .footer .read-time,
@@ -55,9 +56,15 @@
     color: #0072b3;
 }
 
+.popup-wrapper .popup .header,.popup-wrapper .popup .header > .segment {
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
 .popup-wrapper .popup .header iframe {
     width: 100%;
-    height: 450px;
+    height: 432px;
     border: none;
 }
 
