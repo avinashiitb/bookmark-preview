@@ -133,6 +133,7 @@ window.addEventListener("message", function (event) {
                         const parentData = {
                             type: "url",
                             value: window.location.href,
+                            parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
                             parentTitle: document.title,
                             childNodes: [childData]
                         }

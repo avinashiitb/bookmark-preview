@@ -51,32 +51,48 @@ chrome.storage.sync.get(["data"], function(result) {
         // let categoryContent = synthesizeData(result.data.childNodes);
         // console.log(categoryContent);
         // const booklength = categoryContent.length;
+        
         let parentNodeHTML = result.data.childNodes.map(node => {
             let childNodesHTML = '';
             if(node.childNodes && node.childNodes.length) {
-                childNodesHTML = node.childNodes.map(childNodes => `
+                debugger;
+                childNodesHTML = node.childNodes.map(childNodes => childNodes.type =='url' ? `
                 <div class="item">
                     <div class="ui child">
-                        <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
-                        <a href=${childNodes.value} title=${childNodes.title.split(" ").join('-')}>${childNodes.title}</a>
-                        <div class="container">
-                            <div class="round">
-                                <input type="checkbox" id=${childNodes.title.split(" ").join('-')} />
-                                <label for=${childNodes.title.split(" ").join('-')}></label>
+                        <div class="parent-div">
+                            <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
+                            <a href=${childNodes.value} title=${childNodes.title.split(" ").join('-')}>${childNodes.title}</a>
+                        </div>
+                        <div class="parent-button">
+                            <div class="container">
+                                <div class="round">
+                                    <input type="checkbox" id=${childNodes.title.split(" ").join('-')} />
+                                    <label for=${childNodes.title.split(" ").join('-')}></label>
+                                </div>
+                            </div>
+                            <div class="close-container">
+                                <a href="#" class="my-close"></a>
                             </div>
                         </div>
                     </div>
-                </div>`).join(" ");
+                </div>` : '').join(" ");
             }
             return`
             <div class="item">
                 <div class="ui master">
-                    <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join('-')} />
-                    <a href=${node.value} title=${node.parentTitle.split(" ").join('-')}>${node.parentTitle}</a>
-                    <div class="container">
-                        <div class="round">
-                            <input type="checkbox" id=${node.parentTitle.split(" ").join('-')} />
-                            <label for=${node.parentTitle.split(" ").join('-')}></label>
+                    <div class="parent-div">
+                        <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join('-')} />
+                        <a href=${node.value} title=${node.parentTitle.split(" ").join('-')}>${node.parentTitle}</a>
+                    </div>
+                    <div class="parent-button">
+                        <div class="container">
+                            <div class="round">
+                                <input type="checkbox" id=${node.parentTitle.split(" ").join('-')} />
+                                <label for=${node.parentTitle.split(" ").join('-')}></label>
+                            </div>
+                        </div>
+                        <div class="close-container">
+                            <a href="#" class="my-close"></a>
                         </div>
                     </div>
                 </div>
@@ -98,7 +114,7 @@ chrome.storage.sync.get(["data"], function(result) {
         //             $childCheckbox.checkbox('uncheck');
         //     }
         // });
-        const totalLength = result.data.childNodes.length +  result.data.childNodes.reduce((count , node) => {count = count + node.childNodes.length; return count}, 0);
+        const totalLength = result.data.childNodes.length +  result.data.childNodes.reduce((count , node) => {count = count + node.childNodes.filter(node => node.type == 'url').length; return count}, 0);
         $('.top-header .bookmark_count').text(totalLength);
         // if(booklength) {
         //     debugger;
