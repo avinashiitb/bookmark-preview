@@ -21,6 +21,8 @@
             width: 100%;
             display: flex;
             flex-direction: column;
+            max-height: 430px;
+            overflow: auto;
         }
         .top-footer .bookmarks .node {
             display: flex;
@@ -31,7 +33,8 @@
         }
         .top-footer .search {
             margin-top: 6px;
-            width: 96%;
+            padding: 0 16px;
+            width: 100%;
         }
         .top-footer .search > .input {
             width: 100%;
@@ -41,28 +44,44 @@
             border-bottom: 1px solid #0072b3;
             width: 100%;
         }
+        .top-footer .default {
+            margin: 0;
+        }
+
+        .top-footer > .header {
+            align-self: flex-start;
+            padding: 16px 0 0 16px;
+        }
     </style>
 </head>
 <body>
     <div class="top-footer">
-        <h4 class="ui center aligned icon header title">
-            Preview and Bookmark
+       
+        <h4 class="ui header">
+            <img src="./icon_128.png" />
+            <div class="content">
+              Account Settings
+              <div class="sub header">Manage your preferences</div>
+            </div>
         </h4>
-        <div class="ui category search">
+        <div class="ui category search" id="my-search">
             <div class="ui icon input">
               <input class="prompt" type="text" placeholder="Search Bookmarks...">
               <i class="search icon"></i>
             </div>
             <div class="results"></div>
         </div>
+        <h5 class="ui center aligned icon my-search-default orange">
+           No Bookmarks yet...<i class="blind icon"></i>
+        </h5>
         <div class="bookmarks">
-            <div class="node">
+            <!-- <div class="node">
                 <div class="ui checkbox">
                     <input type="checkbox" name="example">
                     <label>Make my profile visible</label>
                   </div>
-                <button class="ui circular bomb icon button">
-                    <i class="bomb icon"></i>
+                <button class="ui circular window close icon button tiny">
+                    <i class="window close icon"></i>
                 </button>
             </div>
             <div class="node">
@@ -70,8 +89,8 @@
                     <input type="checkbox" name="example">
                     <label>Make my profile visible</label>
                   </div>
-                <button class="ui circular bomb icon button">
-                    <i class="bomb icon"></i>
+                <button class="ui circular window close icon button tiny">
+                    <i class="window close icon"></i>
                 </button>
             </div>
             <div class="node">
@@ -79,8 +98,8 @@
                     <input type="checkbox" name="example">
                     <label>Make my profile visible</label>
                   </div>
-                <button class="ui circular bomb icon button">
-                    <i class="bomb icon"></i>
+                <button class="ui circular window close icon button tiny">
+                    <i class="window close icon"></i>
                 </button>
             </div>
             <div class="node">
@@ -88,22 +107,24 @@
                     <input type="checkbox" name="example">
                     <label>Make my profile visible</label>
                   </div>
-                <button class="ui circular bomb icon button">
-                    <i class="bomb icon"></i>
+                <button class="ui circular window close icon button tiny">
+                    <i class="window close icon"></i>
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="top-header">
         <div class="ui left labeled button" tabindex="0">
-            <a class="ui basic right pointing label">
-              2,048
+            <a class="ui basic right pointing label blue bookmark_count">
+              0
             </a>
-            <div class="ui button trigger-button">
+            <div class="ui button trigger-button blue">
               <i class="power off icon"></i> Switch On
             </div>
         </div>
     </div>
+    <script src="./jquery.min.js"></script>
+    <script src="./semantic.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>
