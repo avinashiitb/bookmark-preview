@@ -28,47 +28,64 @@ async function searchTree(tree, childData, origin) {
             type: "url",
             value: origin,
             isRead: true,
+            parentTitle: document.title,
             childNodes: [childData]
         };
         storeData.childNodes.push(parentData);
         return false;
     }
 }
+
 var storeData;
-chrome.storage.sync.clear();
+// chrome.storage.sync.clear();
 window.addEventListener("message", function (event) {
-    const childData = {
-        ...event.data,
-        isRead: false,
-        childNodes: []
-    }
-    chrome.storage.sync.get(["data"], function (result) {
-        console.log("Result", result.data);
-        storeData = result.data;
-        // First time data entry
-        if(!result.data){
-            const parentData = {
-                type: "url",
-                value: event.source.location.href,
-                childNodes: [childData]
+    if (event.source != window)
+        return;
+    debugger;
+    $.ajax({
+        url: event.data.value,
+        async: true,
+        success: function(data) {
+            console.log(data);
+            var bookPageTitle = data.match(/<title>(.*?)<\/title>/)[1];
+            const childData = {
+                ...event.data,
+                isRead: false,
+                childNodes: [],
+                title: bookPageTitle || '',
             }
-            var rootData = {
-                type: "parent",
-                childNodes: [parentData]
-            };
-            chrome.storage.sync.set({ "data": rootData }, function () {
-                console.log('Root Value is set to ', rootData);
+            chrome.storage.sync.get(["data"], function (result) {
+                console.log("Result", result.data);
+                storeData = result.data;
+                // First time data entry
+                debugger;
+                if(!result.data){
+                    const parentData = {
+                        type: "url",
+                        value: event.source.location.href,
+                        parentTitle: document.title,
+                        childNodes: [childData]
+                    }
+                    var rootData = {
+                        type: "parent",
+                        childNodes: [parentData]
+                    };
+                    chrome.storage.sync.set({ "data": rootData }, function () {
+                        console.log('Root Value is set to ', rootData);
+                    });
+                } 
+                else if (storeData.childNodes && storeData.childNodes.length) {
+                    console.log(event, event.source.location.href);
+                    searchTree(storeData, childData, event.source.location.href).then((res) => {
+                        console.log("Storedata", storeData);
+                        chrome.storage.sync.set({ "data": storeData }, function () {
+                            console.log('Value is set to ', storeData);
+                        });
+                    });
+                }
             });
-        } 
-        else if (storeData.childNodes && storeData.childNodes.length) {
-            console.log(event, event.source.location.href);
-            searchTree(storeData, childData, event.source.location.href).then((res) => {
-                console.log("Storedata", storeData);
-                chrome.storage.sync.set({ "data": storeData }, function () {
-                    console.log('Value is set to ', storeData);
-                });
-            });
-        }
+
+        }   
     });
 }, false);
 
@@ -89,11 +106,13 @@ function gotMessage(message, sender, sendresponse) {
         $("a").click(function(e) {
             // Do something
             // console.log(e.currentTarget.href);
+            console.log(e);
             var data = { type: "url", value: e.currentTarget.href };
-            window.postMessage(data, "*");
             if(e.target.className==="popup") {
+                window.postMessage(data, "*");
                 return false;
             }
+           
         });
     `);
     script.appendChild(inlineScript);
