@@ -47,6 +47,10 @@ function search(tree, childData, origin) {
     // tree.childNodes.push(childData);
 }
 
+function getDomain(url) {
+    return url.match(/:\/\/(.[^/]+)/)[1];
+}
+
 var storeData;
 // chrome.storage.sync.clear();
 window.addEventListener("message", function (event) {
@@ -99,6 +103,7 @@ window.addEventListener("message", function (event) {
             const childData = {
                 ...event.data,
                 isRead: false,
+                parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
                 childNodes: [],
                 title: bookPageTitle || '',
             }
@@ -111,6 +116,7 @@ window.addEventListener("message", function (event) {
                         type: "url",
                         value: window.location.href,
                         parentTitle: document.title,
+                        parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
                         childNodes: [childData]
                     }
                     var rootData = {

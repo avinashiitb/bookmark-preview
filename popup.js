@@ -56,17 +56,17 @@ chrome.storage.sync.get(["data"], function(result) {
             if(node.childNodes && node.childNodes.length) {
                 childNodesHTML = node.childNodes.map(childNodes => `
                 <div class="item">
-                    <div class="ui child checkbox">
-                        <input type="checkbox" name="apple">
-                        <label>${childNodes.title}</label>
+                    <div class="ui child">
+                        <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
+                        <a href=${childNodes.value} title=${childNodes.title.split(" ").join('-')}>${childNodes.title}</a>
                     </div>
                 </div>`).join(" ");
             }
             return`
             <div class="item">
-                <div class="ui master checkbox">
-                    <input type="checkbox" name="fruits">
-                    <label>${node.parentTitle}</label>
+                <div class="ui master">
+                    <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join('-')} />
+                    <a href=${node.value} title=${node.parentTitle.split(" ").join('-')}>${node.parentTitle}</a>
                 </div>
                 <div class="list">${childNodesHTML}</div>
                 </div>
