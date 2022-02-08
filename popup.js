@@ -59,6 +59,12 @@ chrome.storage.sync.get(["data"], function(result) {
                     <div class="ui child">
                         <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
                         <a href=${childNodes.value} title=${childNodes.title.split(" ").join('-')}>${childNodes.title}</a>
+                        <div class="container">
+                            <div class="round">
+                                <input type="checkbox" id=${childNodes.title.split(" ").join('-')} />
+                                <label for=${childNodes.title.split(" ").join('-')}></label>
+                            </div>
+                        </div>
                     </div>
                 </div>`).join(" ");
             }
@@ -67,6 +73,12 @@ chrome.storage.sync.get(["data"], function(result) {
                 <div class="ui master">
                     <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join('-')} />
                     <a href=${node.value} title=${node.parentTitle.split(" ").join('-')}>${node.parentTitle}</a>
+                    <div class="container">
+                        <div class="round">
+                            <input type="checkbox" id=${node.parentTitle.split(" ").join('-')} />
+                            <label for=${node.parentTitle.split(" ").join('-')}></label>
+                        </div>
+                    </div>
                 </div>
                 <div class="list">${childNodesHTML}</div>
                 </div>
