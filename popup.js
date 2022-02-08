@@ -76,16 +76,16 @@ chrome.storage.sync.get(["data"], function(result) {
         $('.top-footer .bookmarks').html(checkboxHTML);
         $("#my-search").show();
         $(".my-search-default").hide();
-        $('.list .master.checkbox').checkbox({
-            onChecked: function() {
-                var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
-                    $childCheckbox.checkbox('check');
-            },
-            onUnchecked: function() {
-                var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
-                    $childCheckbox.checkbox('uncheck');
-            }
-        });
+        // $('.list .master.checkbox').checkbox({
+        //     onChecked: function() {
+        //         var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
+        //             $childCheckbox.checkbox('check');
+        //     },
+        //     onUnchecked: function() {
+        //         var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
+        //             $childCheckbox.checkbox('uncheck');
+        //     }
+        // });
         const totalLength = result.data.childNodes.length +  result.data.childNodes.reduce((count , node) => {count = count + node.childNodes.length; return count}, 0);
         $('.top-header .bookmark_count').text(totalLength);
         // if(booklength) {

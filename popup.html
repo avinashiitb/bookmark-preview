@@ -21,6 +21,8 @@
             width: 100%;
             display: flex;
             flex-direction: column;
+            max-height: 430px;
+            overflow: auto;
         }
         .top-footer .bookmarks .node {
             display: flex;
@@ -31,7 +33,8 @@
         }
         .top-footer .search {
             margin-top: 6px;
-            width: 96%;
+            padding: 0 16px;
+            width: 100%;
         }
         .top-footer .search > .input {
             width: 100%;
@@ -44,12 +47,22 @@
         .top-footer .default {
             margin: 0;
         }
+
+        .top-footer > .header {
+            align-self: flex-start;
+            padding: 16px 0 0 16px;
+        }
     </style>
 </head>
 <body>
     <div class="top-footer">
-        <h4 class="ui center aligned icon header title blue">
-            Preview and Bookmark
+       
+        <h4 class="ui header">
+            <img src="./icon_128.png" />
+            <div class="content">
+              Account Settings
+              <div class="sub header">Manage your preferences</div>
+            </div>
         </h4>
         <div class="ui category search" id="my-search">
             <div class="ui icon input">
