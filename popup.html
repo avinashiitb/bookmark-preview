@@ -14,14 +14,14 @@
         }
         .top-header {
             border-top: 1px solid #0072b3;
-            padding: 10px 0;
+            padding: 14px 0;
         }
         .top-footer .bookmarks {
             padding: 10px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            max-height: 430px;
+            max-height: 410px;
             overflow: auto;
         }
         .top-footer .bookmarks .node {
@@ -50,7 +50,60 @@
 
         .top-footer > .header {
             align-self: flex-start;
-            padding: 16px 0 0 16px;
+            padding: 16px 0 16px 16px;
+            width: 100%;
+            border-bottom: 1px solid #0072b3;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .ui.checkbox .box:before, .ui.checkbox label:before {
+            border-radius: 20px;
+        }
+
+        .ui.checkbox input:checked~.box:after, .ui.checkbox input:checked~label:after {
+            font-size: 10px;
+            color: white;
+        }
+
+        .ui.checkbox input:checked~.box:before, .ui.checkbox input:checked~label:before {
+            background-color: #0072b3;
+            border: 1px solid #0072b3;
+        }
+
+        .bookmarks .checkbox {
+            margin: 2px 0;
+        }
+
+        .ui.list .list, ol.ui.list ol, ul.ui.list ul {
+            padding: .75em 0 .25em 1em;
+        }
+
+        .ui.checkbox label {
+            font-weight: bold;
+        }
+        .ui.checkbox.child label {
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        
+        .relaxed .item {
+            padding-top: .42857143em !important;
+        }
+        .relaxed .item .ui{
+            display: flex;
+            align-items: center;
+        }
+        .relaxed .item .ui.master {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .relaxed .item .ui.child {
+            padding: 4px 0;
+        }
+        .relaxed .item img{
+            margin-right: 12px;
         }
     </style>
 </head>
@@ -60,7 +113,7 @@
         <h4 class="ui header">
             <img src="./icon_128.png" />
             <div class="content">
-              Account Settings
+              Preview & BookMark
               <div class="sub header">Manage your preferences</div>
             </div>
         </h4>

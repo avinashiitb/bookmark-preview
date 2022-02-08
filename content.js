@@ -29,11 +29,16 @@ async function searchTree(tree, childData, origin) {
             value: origin,
             isRead: true,
             parentTitle: document.title,
+            parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
             childNodes: [childData]
         };
         storeData.childNodes.push(parentData);
         return false;
     }
+}
+
+function getDomain(url) {
+    return url.match(/:\/\/(.[^/]+)/)[1];
 }
 
 var storeData;
@@ -51,6 +56,7 @@ window.addEventListener("message", function (event) {
             const childData = {
                 ...event.data,
                 isRead: false,
+                parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
                 childNodes: [],
                 title: bookPageTitle || '',
             }
@@ -64,6 +70,7 @@ window.addEventListener("message", function (event) {
                         type: "url",
                         value: event.source.location.href,
                         parentTitle: document.title,
+                        parentFavicon: document.querySelector('link[rel="shortcut icon"]').href,
                         childNodes: [childData]
                     }
                     var rootData = {
