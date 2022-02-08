@@ -44,13 +44,8 @@ chrome.storage.sync.get(["data"], function(result) {
     console.log("====================");
     console.log(result);
     console.log("====================");
-   
+    const colour =['#2185d0', '#21ba45', '#3b5998', '#49769c'];
     if(result.data) {
-    
-        // let categoryContent = synthesizeData(result.data.childNodes);
-        // console.log(categoryContent);
-        // const booklength = categoryContent.length;
-        
         let parentNodeHTML = result.data.childNodes.map((node,ind) => {
             let childNodesHTML = '';
             let notesHTML = '';
@@ -60,7 +55,7 @@ chrome.storage.sync.get(["data"], function(result) {
                     <div class="ui child">
                         <div class="parent-div">
                             <img height="16" width="16" src=${childNodes.parentFavicon || ''} title=${childNodes.title.split(" ").join('-')} />
-                            <a href=${childNodes.value} title=${childNodes.title.split(" ").join(`-${ind}-${index}-`)}>${childNodes.title}</a>
+                            <a href=${childNodes.value} target="_blank" title=${childNodes.title.split(" ").join(`-${ind}-${index}-`)}>${childNodes.title}</a>
                         </div>
                         <div class="parent-button">
                             <div class="container">
@@ -76,8 +71,8 @@ chrome.storage.sync.get(["data"], function(result) {
                     </div>
                 </div>` : '').join(" ");
 
-                notesHTML = node.childNodes.map(childNodes => childNodes.type =='text' ? `
-                <span>${childNodes.value}</span>` : '').join(" ");
+                notesHTML = node.childNodes.map((childNodes,ind) => childNodes.type =='text' ? `
+                <span style="color:${colour[ind] || colour[Math.floor(Math.random() * colour.length)]}">${childNodes.value}</span>` : '').join(" ");
 
                 notesHTML = !!notesHTML ? `<div class="notes">${notesHTML}</div>` : notesHTML;
             }
@@ -87,7 +82,7 @@ chrome.storage.sync.get(["data"], function(result) {
                     <div class="parent-div">
                         <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join(`-${ind}-`)} />
                         <div class="des">
-                            <a href=${node.value} title=${node.parentTitle.split(" ").join(`-${ind}-`)}>${node.parentTitle}</a>
+                            <a href=${node.value} target="_blank" title=${node.parentTitle.split(" ").join(`-${ind}-`)}>${node.parentTitle}</a>
                             ${notesHTML}
                         </div>
                     </div>
@@ -111,40 +106,16 @@ chrome.storage.sync.get(["data"], function(result) {
         $('.top-footer .bookmarks').html(checkboxHTML);
         $("#my-search").show();
         $(".my-search-default").hide();
-        // $('.list .master.checkbox').checkbox({
-        //     onChecked: function() {
-        //         var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
-        //             $childCheckbox.checkbox('check');
-        //     },
-        //     onUnchecked: function() {
-        //         var $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox');
-        //             $childCheckbox.checkbox('uncheck');
-        //     }
-        // });
         const totalLength = result.data.childNodes.length +  result.data.childNodes.reduce((count , node) => {count = count + node.childNodes.filter(node => node.type == 'url').length; return count}, 0);
         $('.top-header .bookmark_count').text(totalLength);
-        // if(booklength) {
-        //     debugger;
-        //     const bookContent = categoryContent.map(node => `<div class="node">
-        //         <div class="ui checkbox">
-        //             <input type="checkbox" name="example">
-        //             <label>${node.title}</label>
-        //         </div>
-        //         <button class="ui circular window close icon button tiny">
-        //             <i class="window close icon"></i>
-        //         </button>
-        //     </div>`);
-        //     $('.top-footer .bookmarks').html(bookContent.join(" "));
-        //     $("#my-search").show();
-        //     $(".my-search-default").hide();
-        //     $('.ui.search').search({
-        //         type: 'category',
-        //         source: categoryContent
-        //     });
-        //     $('.top-header .bookmark_count').text(booklength);
-        // } else {
-        //     $("#my-search").hide();
-        // }
+        document.querySelectorAll(".notes").forEach(node => {
+            if(node.offsetHeight > 20) {
+                $(node).addClass("hideData");
+            };
+            $('.hideData').on('click', function(e) {
+                $(e.target).removeClass("hideData");
+            });
+        });
     } else {
         $("#my-search").hide();
     }

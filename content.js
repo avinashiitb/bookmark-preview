@@ -111,7 +111,7 @@ window.addEventListener("message", function (event) {
         success: function (data) {
             // console.log(data);
             let bookPageTitle = data.match(/<title>(.*?)<\/title>/)[1];
-            let shortcutIcon = document.querySelector('link[rel="shortcut icon"]') ? document.querySelector('link[rel="shortcut icon"]').href : '';
+            let shortcutIcon = document.querySelector("link[rel~='icon']") ? document.querySelector("link[rel~='icon']").href : '';
             const childData = {
                 ...event.data,
                 isRead: false,
@@ -235,7 +235,8 @@ function getSelectionText() {
 }
 
 window.addEventListener('mouseup', function () {
-    var thetext = getSelectionText();
+    let thetext = getSelectionText();
+    let shortcutIcon = document.querySelector("link[rel~='icon']") ? document.querySelector("link[rel~='icon']").href : '';
     if (thetext.length > 0) { // check there's some text selected
         // console.log(thetext, window.location) // logs whatever textual content the user has selected on the page
         const childData = {

@@ -96,7 +96,7 @@
         }
         .relaxed .item .ui{
             display: flex;
-            align-items: center;
+            align-items: baseline;
             width: 100%;
             justify-content: space-between;
         }
@@ -118,12 +118,14 @@
         }
 
         .notes {
-            font-size: 10px;
-            font-style: italic;
-            color: darkcyan;
-            display: flex;
-            flex-wrap: wrap;
-            width: 100%;
+            font-size: 12px;
+    font-style: italic;
+    color: darkcyan;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-weight: normal;
+    margin-top: 4px;
         }
 
 .round {
@@ -219,6 +221,24 @@
 .parent-div {
     width: 80%;
     display: flex;
+}
+
+.hideData {
+    height: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hideData::after {
+    height: 16px;
+    width: 64px;
+    content: 'read more...';
+    background-color: white;
+    position: absolute;
+    right: 0;
+    color: inherit;
+    padding-left: 6px;
+    cursor: pointer;
 }
     </style>
 </head>
