@@ -5,18 +5,6 @@ function popup() {
     });
 }
 
-function createNode (node) {
-    return `<div class="node">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>Make my profile visible</label>
-                </div>
-                <button class="ui circular window close icon button tiny">
-                    <i class="window close icon"></i>
-                </button>
-            </div>`
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     if(document.querySelector(".trigger-button")) document.querySelector(".trigger-button").addEventListener("click", popup);
 });
@@ -57,34 +45,75 @@ chrome.storage.sync.get(["data"], function(result) {
     console.log(result);
     console.log("====================");
 
-     debugger;
+   
     if(result.data) {
     
-        let categoryContent = synthesizeData(result.data.childNodes);
-        console.log(categoryContent);
-        const booklength = categoryContent.length;
-        if(booklength) {
-            debugger;
-            const bookContent = categoryContent.map(node => `<div class="node">
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label>${node.title}</label>
+        // let categoryContent = synthesizeData(result.data.childNodes);
+        // console.log(categoryContent);
+        // const booklength = categoryContent.length;
+        let parentNodeHTML = result.data.childNodes.map(node => {
+            let childNodesHTML = '';
+            if(node.childNodes && node.childNodes.length) {
+                childNodesHTML = node.childNodes.map(childNodes => `
+                <div class="item">
+                    <div class="ui child checkbox">
+                        <input type="checkbox" name="apple">
+                        <label>${childNodes.title}</label>
+                    </div>
+                </div>`).join(" ");
+            }
+            return`
+            <div class="item">
+                <div class="ui master checkbox">
+                    <input type="checkbox" name="fruits">
+                    <label>${node.parentTitle}</label>
                 </div>
-                <button class="ui circular window close icon button tiny">
-                    <i class="window close icon"></i>
-                </button>
-            </div>`);
-            $('.top-footer .bookmarks').html(bookContent.join(" "));
-            $("#my-search").show();
-            $(".my-search-default").hide();
-            $('.ui.search').search({
-                type: 'category',
-                source: categoryContent
+                <div class="list">${childNodesHTML}</div>
+                </div>
+            `;
+        }).join(" ");
+        let checkboxHTML = `<div class="ui celled relaxed list">${parentNodeHTML}</div>`;
+        $('.top-footer .bookmarks').html(checkboxHTML);
+        $("#my-search").show();
+        $(".my-search-default").hide();
+        $('.list .master.checkbox').checkbox({
+                // check all children
+                onChecked: function() {
+                var
+                    $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox')
+                ;
+                $childCheckbox.checkbox('check');
+                },
+                // uncheck all children
+                onUnchecked: function() {
+                var
+                    $childCheckbox  = $(this).closest('.checkbox').siblings('.list').find('.checkbox')
+                ;
+                $childCheckbox.checkbox('uncheck');
+                }
             });
-            $('.top-header .bookmark_count').text(booklength);
-        } else {
-            $("#my-search").hide();
-        }
+        // if(booklength) {
+        //     debugger;
+        //     const bookContent = categoryContent.map(node => `<div class="node">
+        //         <div class="ui checkbox">
+        //             <input type="checkbox" name="example">
+        //             <label>${node.title}</label>
+        //         </div>
+        //         <button class="ui circular window close icon button tiny">
+        //             <i class="window close icon"></i>
+        //         </button>
+        //     </div>`);
+        //     $('.top-footer .bookmarks').html(bookContent.join(" "));
+        //     $("#my-search").show();
+        //     $(".my-search-default").hide();
+        //     $('.ui.search').search({
+        //         type: 'category',
+        //         source: categoryContent
+        //     });
+        //     $('.top-header .bookmark_count').text(booklength);
+        // } else {
+        //     $("#my-search").hide();
+        // }
     } else {
         $("#my-search").hide();
     }

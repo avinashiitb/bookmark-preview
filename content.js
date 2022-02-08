@@ -28,6 +28,7 @@ async function searchTree(tree, childData, origin) {
             type: "url",
             value: origin,
             isRead: true,
+            parentTitle: document.title,
             childNodes: [childData]
         };
         storeData.childNodes.push(parentData);
@@ -57,6 +58,7 @@ window.addEventListener("message", function (event) {
                 console.log("Result", result.data);
                 storeData = result.data;
                 // First time data entry
+                debugger;
                 if(!result.data){
                     const parentData = {
                         type: "url",
