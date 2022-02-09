@@ -77,7 +77,7 @@ chrome.storage.sync.get(["data"], function(result) {
                 notesHTML = !!notesHTML ? `<div class="notes">${notesHTML}</div>` : notesHTML;
             }
             return`
-            <div class="item" id=${ind}>
+            <div class="item" id=Parent-${ind}>
                 <div class="ui master">
                     <div class="parent-div">
                         <img height="16" width="16" src=${node.parentFavicon || ''} title=${node.parentTitle.split(" ").join(`-${ind}-`)} />
@@ -119,6 +119,51 @@ chrome.storage.sync.get(["data"], function(result) {
     } else {
         $("#my-search").hide();
     }
+    const searchBar = document.getElementById("searchBar");
+    searchBar.addEventListener("keyup", e => {
+        const searchString = e.target.value;
+        function check(element) {
+            var originalString = element.toUpperCase()
+            if (originalString.includes(searchString.toUpperCase())) {
+                return true;
+            }
+            return false;
+        }
+        var noOfParentBookmarks = result.data.childNodes.length;
+        for (var i = 0; i < noOfParentBookmarks; i++) {
+            var noOfChildBookmarks = result.data.childNodes[i].childNodes.length;
+            if (check(result.data.childNodes[i].parentTitle)) {
+                //console.log("Show Parent-",i);
+                $("#Parent-" + i).show();
+                continue;
+            }
+            else if (noOfChildBookmarks > 1)
+            {
+                for (var j = 1; j < noOfChildBookmarks; j++)
+                {
+                    if (result.data.childNodes[i].childNodes[j].value)
+                    {
+                        if (check(result.data.childNodes[i].childNodes[j].value))
+                        {
+                            //console.log("Show Parent-",i);
+                            $("#Parent-" + i).show();
+                            break;
+                        }
+                        else if (j == noOfChildBookmarks - 1)
+                        {
+                            //console.log("Hide Parent-",i);
+                            $("#Parent-" + i).hide();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //console.log("Hide Parent-",i);
+                $("#Parent-" + i).hide();
+            }
+        }
+    });
     
 });
 
