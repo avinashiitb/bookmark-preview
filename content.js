@@ -6,7 +6,7 @@ function popupDiv(url, min = Math.floor(Math.random() * 10)) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="#0072b3" width="12" height="12" viewBox="0 0 24 24"><path d="M12 1c-6.338 0-12 4.226-12 10.007 0 2.05.739 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 9.236 2.247 15.968-3.405 15.968-9.457 0-5.812-5.701-10.007-12-10.007zm1 15h-2v-6h2v6zm-1-7.75c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/></svg>
             <div class="popup">
                 <div class="footer">
-                    <span class="read-time">`+ min + ` Min</span>
+                    <span class="read-time"> 0 Min</span>
                     <button class="ui button tiny primary bookmark-button-call">
                         Save
                     </button>
@@ -168,8 +168,17 @@ function gotMessage(message, sender, sendresponse) {
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     var inlineScript = document.createTextNode(`
+    function doSomething(e){
+        const wordCount = [...this.contentDocument.querySelectorAll("p")].reduce((count,node) => {
+            count = count + node.innerText.length;
+            return count;
+        },0);
+        const totalTime = Math.floor(wordCount/250)+2; 
+        console.log(this);
+        this.parentElement.parentElement.querySelector(".read-time").innerText = totalTime+'min';
+    }
         function iframeFn (node, url) {
-            if(node.querySelector(".header .segment") && node.querySelector(".header .segment").innerHTML) node.querySelector(".header").innerHTML = '<iframe src='+url+' title="Iframe Example"></iframe>';
+            if(node.querySelector(".header .segment") && node.querySelector(".header .segment").innerHTML) node.querySelector(".header").innerHTML = '<iframe src='+url+' onload="doSomething.call(this)" title="Iframe Example"></iframe>';
         }
     `);
     script.appendChild(inlineScript);
@@ -291,3 +300,9 @@ window.addEventListener('mouseup', function () {
         }    
     }
 }, false)
+
+
+// min = [...temp1.contentDocument.querySelectorAll("p")].reduce((count,node) => {
+//     count = count + node.innerText.length;
+//     return count;
+// },0)/250 || 8;

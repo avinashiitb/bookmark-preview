@@ -102,3 +102,8 @@
     visibility: visible;
     opacity: 1;
 }
+
+.bookmark-button-call {
+    width: 30% !important;
+    font-size: 12px !important;
+}
