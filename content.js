@@ -301,7 +301,24 @@ window.addEventListener('mouseup', function () {
     }
 }, false)
 
-
+chrome.storage.sync.get(["data"], function (result) {
+	var currentPageUrl = window.location.href;
+    var noOfParentBookmarks = result.data.childNodes.length;
+    for(var i = 0; i < noOfParentBookmarks; i++) {
+		var noOfChildBookmarks = result.data.childNodes[i].childNodes.length;
+		for(var j = 0; j < noOfChildBookmarks; j++)
+        {
+		    if(result.data.childNodes[i].childNodes[j].value == currentPageUrl)
+		    {
+                result.data.childNodes[i].childNodes[j].isRead = true;
+                chrome.storage.sync.set({ "data": result.data }, function () {
+                    console.log('Value is set to ', result.data);
+                });
+                break;
+    	    }	
+		}
+	}
+});
 // min = [...temp1.contentDocument.querySelectorAll("p")].reduce((count,node) => {
 //     count = count + node.innerText.length;
 //     return count;
